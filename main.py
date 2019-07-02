@@ -59,7 +59,8 @@ if len(sys.argv)>1:
 			data[i[0]]['location']="/tmp/"
 		save()
 	elif "-f" in sys.argv:
-		print("dosya aktarımı şeysi")
+		os.system(f"scp -P {filter(data[sys.argv[2]]['port'])} {filter(sys.argv[3])} {filter(data[sys.argv[2]]['uname'])}@{filter(data[sys.argv[2]]['ip'])}:{filter(data[sys.argv[2]]['location'])}")
+		# scp asd a@ip:pa
 	else:
 		try:
 			if not sys.argv[1] in data:
