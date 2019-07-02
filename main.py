@@ -59,13 +59,19 @@ if len(sys.argv)>1:
 			data[i[0]]['location']="/tmp/"
 		save()
 	elif "-f" in sys.argv:
-		os.system(f"scp -P {filter(data[sys.argv[2]]['port'])} {filter(sys.argv[3])} {filter(data[sys.argv[2]]['uname'])}@{filter(data[sys.argv[2]]['ip'])}:{filter(data[sys.argv[2]]['location'])}")
+		transfer=""
+		if len(sys.argv)>4:
+			transfer=filter(sys.argv[4])
+		else:
+			transfer=filter(data[sys.argv[2]]['location'])
+		os.system(f"scp -P {filter(data[sys.argv[2]]['port'])} {filter(sys.argv[3])} {filter(data[sys.argv[2]]['uname'])}@{filter(data[sys.argv[2]]['ip'])}:{transfer}")
 		# scp asd a@ip:pa
 	else:
 		try:
 			if not sys.argv[1] in data:
 				print("User not exists")
 			else:
+				transfer=""
 				n=filter(sys.argv[1])
 				os.system(f"ssh {filter(data[n]['uname'])}@{filter(data[n]['ip'])} -p {filter(data[n]['port'])}")
 		except:
