@@ -3,7 +3,8 @@
 import os
 import json
 data=dict()
-if  not os.path.exists("setting/data.json"):
+if  not os.path.exists("settings/data.json"):
+	os.mkdir("settings")
 	print("Pleas create user for shh connection !")
 	name=input("Connection name = ")
 	uname=input("Username = ")
@@ -18,11 +19,11 @@ if  not os.path.exists("setting/data.json"):
 	data[name]['uname']=uname
 	data[name]['location']=location
 	j=json.dumps(data)
-	f=open("setting/data.json","w")
+	f=open("settings/data.json","w")
 	f.write(j)
 	f.close()
 if data==dict():
-	f=open("setting/data.json")
+	f=open("settings/data.json")
 	data=json.loads(f.read())
 	f.close()
 print(data)
