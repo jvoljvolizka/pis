@@ -4,7 +4,13 @@ import os
 import json
 import sys
 data=dict()
-if  not os.path.exists("settings/data.json"):
+path="/home/while/Desktop/git/pis/"
+def save():
+	j=json.dumps(data)
+	f=open(path+"settings/data.json","w")
+	f.write(j)
+	f.close()
+if  not os.path.exists(path+"settings/data.json"):
 	os.mkdir("settings")
 	print("Pleas create user for shh connection !")
 	name=input("Connection name = ")
@@ -21,35 +27,34 @@ if  not os.path.exists("settings/data.json"):
 	data[name]['port']=port
 	data[name]['uname']=uname
 	data[name]['location']=location
-	j=json.dumps(data)
-	f=open("settings/data.json","w")
-	f.write(j)
-	f.close()
+	save()
 if data==dict():
-	f=open("settings/data.json")
+	f=open(path+"settings/data.json")
 	data=json.loads(f.read())
 	f.close()
 if len(sys.argv)>1:
 	if "--help" in sys.argv or "-h" in sys.argv:
 		print("pis")
-		print("\t-c -n <connection name> ssh connection")
-		print("\t-c --name <connection name> ssh connection")
-		print("\t--add <name>:<username>:<ip>:<port> no spaces")
+		print("\t<connection name> ssh connection")
+		print("\t--add <name>:<username>:<ip>:<port>:<location> no spaces")
 		print("\t-f <connection name> <transfer file> <transfer location optional> file transfer")
-	elif "-c" in sys.argv:
-		if "-n" in sys.argv or "--name" in sys.argv:
-			try:
-				print(sys.argv[3])
-				if not sys.argv[3] in data:
-					print("User not exists")
-			except:
-				print("Pleas enter connection name !")
 	elif "--add" in sys.argv:
 		i=sys.argv[2].split(":")
 		data[i[0]]=dict()
 		data[i[0]]['ip']=i[1]
 		data[i[0]]['port']=i[2]
 		data[i[0]]['uname']=i[3]
-		data[i[0]]['location']=i[4]
+		if len(i)>4:
+			data[i[0]]['location']=i[4]
+		else:
+			data[i[0]]['location']="/tmp/"
+		save()
 	elif "-f" in sys.argv:
 		print("dosya aktarımı şeysi")
+	else:
+		try:
+			print(sys.argv[1])
+			if not sys.argv[1] in data:
+				print("User not exists")
+		except:
+			print("Pleas enter connection name !")
