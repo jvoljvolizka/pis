@@ -32,13 +32,18 @@ if data==dict():
 if len(sys.argv)>1:
 	if "--help" in sys.argv or "-h" in sys.argv:
 		print("pis")
-		print("-c -n <connection name> ssh connection")
-		print("-c --name <connection name> ssh connection")
-		print("--add <name>:<username>:<ip>:port no spaces")
-		print("-f <connection name> <transfer file> <transfer location optional> file transfer")
+		print("\t-c -n <connection name> ssh connection")
+		print("\t-c --name <connection name> ssh connection")
+		print("\t--add <name>:<username>:<ip>:<port> no spaces")
+		print("\t-f <connection name> <transfer file> <transfer location optional> file transfer")
 	elif "-c" in sys.argv:
 		if "-n" in sys.argv or "--name" in sys.argv:
-			print(sys.argv[3])
+			try:
+				print(sys.argv[3])
+				if not sys.argv[3] in data:
+					print("User not exists")
+			except:
+				print("Pleas enter connection name !")
 	elif "--add" in sys.argv:
 		i=sys.argv[2].split(":")
 		data[i[0]]=dict()
