@@ -71,7 +71,6 @@ if len(sys.argv)>1:
 			if not sys.argv[1] in data:
 				print("User not exists")
 			else:
-				transfer=""
 				n=filter(sys.argv[1])
 				os.system(f"ssh {filter(data[n]['uname'])}@{filter(data[n]['ip'])} -p {filter(data[n]['port'])}")
 		except:
